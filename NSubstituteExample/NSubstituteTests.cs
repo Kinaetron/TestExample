@@ -26,5 +26,21 @@ namespace NSubstituteProject
 
             calculator.Received().Add(3, 6);
         }
+
+        [Fact]
+        public void NSubstitute_Example_3()
+        {
+            var counter = 0;
+
+            var calculator = Substitute.For<ICalculator>();
+            calculator.When(x => x.Add(Arg.Any<int>(), Arg.Any<int>()))
+                .Do(x => counter++);
+
+            var computer = new Computer(calculator);
+            computer.CPU("Intel", 3, 6);
+
+            counter.Should().Be(1);
+
+        }
     }
 }
